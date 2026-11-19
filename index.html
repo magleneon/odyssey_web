@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Одиссея — наземная станция</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= иконки ================= -->
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/></symbol>
+  <symbol id="i-cam" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></symbol>
+  <symbol id="i-task" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12l3 3 5-6"/></symbol>
+  <symbol id="i-game" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 10.5v4M5 12.5h4"/><circle cx="16" cy="11" r="1"/><circle cx="18" cy="14" r="1"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+  <symbol id="i-therm" viewBox="0 0 24 24"><path d="M14 14.8V5a2 2 0 0 0-4 0v9.8a4 4 0 1 0 4 0z"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></symbol>
+  <symbol id="i-air" viewBox="0 0 24 24"><path d="M3 8h11a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h7"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2 9a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1"/></symbol>
+  <symbol id="i-shot" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+  <symbol id="i-full" viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></symbol>
+  <symbol id="i-battery" viewBox="0 0 24 24"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2"/></symbol>
+  <symbol id="i-speed" viewBox="0 0 24 24"><path d="M4 16a8 8 0 1 1 16 0"/><path d="M12 16l4-5"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h7a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h7"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></symbol>
+  <symbol id="i-disk" viewBox="0 0 24 24"><rect x="3" y="12" width="18" height="8" rx="2"/><path d="M5 12l3-7h8l3 7M7 16h.01"/></symbol>
+  <symbol id="i-gps" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></symbol>
+  <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12l6-6"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3c1 4 5 6 5 11a5 5 0 0 1-10 0c0-3 2-4 2-7 1.5 1 2.5 2.5 3 4 1-2 0-5 0-8z"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4h11l-2 4 2 4H5"/></symbol>
+  <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3 3 7 3s7-1.3 7-3"/></symbol>
+  <symbol id="i-nodes" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M11 7l-5 9M13 7l5 9M7.5 18h9"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M4 20h16"/></symbol>
+  <symbol id="rover" viewBox="0 0 160 110">
+    <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="40" y="35" width="80" height="6" rx="2"/>
+      <rect x="28" y="41" width="104" height="26" rx="5"/>
+      <path d="M80 35V22"/><rect x="70" y="10" width="20" height="12" rx="3"/>
+      <path d="M28 58H16M132 58h12"/>
+      <circle cx="32" cy="84" r="14"/><circle cx="80" cy="86" r="12"/><circle cx="128" cy="84" r="14"/>
+      <circle cx="32" cy="84" r="5"/><circle cx="80" cy="86" r="4"/><circle cx="128" cy="84" r="5"/>
+      <path d="M44 67l-5 6M116 67l5 6M80 67v7"/>
+    </g>
+  </symbol>
+</svg>
+
+<div class="alarm" id="alarm">🔥 ОБНАРУЖЕНО ПЛАМЯ</div>
+
+<!-- ================= верхняя панель ================= -->
+<header class="top">
+  <div class="brand">
+    <svg><use href="#rover"/></svg>
+    <div><b>Одиссея</b><small>Наземная станция · v0.2</small></div>
+  </div>
+  <nav class="topnav" id="topnav"></nav>
+  <div class="online">
+    <span class="dot" id="online-dot"></span>
+    <div><b id="online-text">Подключение…</b><small>ROS 2 Jazzy</small></div>
+  </div>
+  <div class="clock"><b id="clock">--:--:--</b><small id="date"></small></div>
+</header>
+
+<div class="layout">
+  <!-- ================= боковое меню ================= -->
+  <aside>
+    <div class="rover-card">
+      <svg><use href="#rover"/></svg>
+      <b>Одиссея</b>
+      <span class="pill" id="side-pill">Подключение…</span>
+    </div>
+    <nav class="menu" id="sidenav"></nav>
+    <div class="side-status">
+      <div>ROS 2 <span class="st"><span class="dot" data-dot="ros"></span><span data-k="rosText">—</span></span></div>
+      <div>«Голова» <span class="st"><span class="dot" data-dot="esp"></span><span data-k="espText">—</span></span></div>
+      <div>Связь <span class="st"><svg class="i" style="width:14px;height:14px"><use href="#i-wifi"/></svg><span data-k="wifi">—</span> dBm</span></div>
+    </div>
+  </aside>
+
+  <main>
+  <!-- ================================================================ ОБЗОР -->
+  <section class="page" id="page-overview">
+    <div class="grid">
+      <div class="panel c6">
+        <div class="ph"><svg class="i"><use href="#i-cam"/></svg>Камера <span class="right">основная</span></div>
+        <div class="placeholder">
+          <span class="tag">нет сигнала</span>
+          <svg class="i big"><use href="#i-cam"/></svg>
+          <b>Камера не подключена</b>
+          <span>TrackingCam или USB-камера — следующий этап</span>
+          <div class="cam-btns"><span><svg class="i"><use href="#i-shot"/></svg></span><span><svg class="i"><use href="#i-cam"/></svg></span><span><svg class="i"><use href="#i-full"/></svg></span></div>
+        </div>
+      </div>
+
+      <div class="panel c6">
+        <div class="ph"><svg class="i"><use href="#i-pulse"/></svg>Телеметрия</div>
+        <div class="tiles">
+          <div class="tile"><div class="t"><svg class="i"><use href="#i-therm"/></svg>Температура</div>
+            <div class="v"><span data-k="temp">—</span><small>°C</small></div><div class="s">внутри «головы»</div></div>
+          <div class="tile"><div class="t"><svg class="i"><use href="#i-drop"/></svg>Влажность</div>
+            <div class="v"><span data-k="hum">—</span><small>%</small></div><div class="s"><span data-k="pressmm">—</span> мм рт. ст.</div></div>
+          <div class="tile"><div class="t"><svg class="i"><use href="#i-air"/></svg>CO₂</div>
+            <div class="v"><span data-k="co2" data-color="co2">—</span><small>ppm</small></div><div class="s" data-k="co2q">—</div></div>
+          <div class="tile"><div class="t"><svg class="i"><use href="#i-wifi"/></svg>Связь (Wi-Fi)</div>
+            <div class="v"><span data-k="wifi">—</span><small>dBm</small></div><div class="s" data-k="wifiq">—</div></div>
+        </div>
+        <div class="bars">
+          <div class="barbox">CPU <span class="muted" data-k="cputempShort"></span>
+            <div class="barrow"><div class="bar"><div data-bar="cpu"></div></div><span data-k="cpu">—</span></div></div>
+          <div class="barbox">RAM
+            <div class="barrow"><div class="bar"><div data-bar="ram"></div></div><span data-k="ram">—</span></div></div>
+          <div class="barbox">Хранилище
+            <div class="barrow"><div class="bar"><div data-bar="disk"></div></div><span data-k="disk">—</span></div></div>
+        </div>
+      </div>
+
+      <div class="panel c5">
+        <div class="ph"><svg class="i"><use href="#i-map"/></svg>Карта / SLAM <span class="right">2D</span></div>
+        <div class="placeholder gridbg">
+          <div class="arrow"></div><b>Карта не строится</b>
+          <span>появится после подключения GPS, энкодеров колёс и дальномеров</span>
+        </div>
+      </div>
+
+      <div class="panel c4">
+        <div class="ph"><svg class="i"><use href="#i-target"/></svg>Датчики</div>
+        <div class="list">
+          <div><span class="dot" data-dot="temp"></span>BME280 · температура<span class="val"><span data-k="temp">—</span> °C</span></div>
+          <div><span class="dot" data-dot="press"></span>BME280 · давление<span class="val"><span data-k="press">—</span> гПа</span></div>
+          <div><span class="dot" data-dot="co2"></span>CO₂ (инфракрасный)<span class="val"><span data-k="co2">—</span> ppm</span></div>
+          <div><span class="dot" data-dot="flame"></span>Датчик пламени<span class="val" data-k="flame">—</span></div>
+          <div><span class="dot" data-dot="water"></span>Датчик воды<span class="val"><span data-k="water">—</span> %</span></div>
+          <div><span class="dot"></span>GPS NEO-M8N<span class="val dim">не подключен</span></div>
+          <div><span class="dot"></span>Энкодеры колёс<span class="val dim">не подключены</span></div>
+        </div>
+      </div>
+
+      <div class="panel c3">
+        <div class="ph"><svg class="i"><use href="#i-target"/></svg>Ориентация (IMU)</div>
+        <div class="placeholder" style="min-height:250px">
+          <svg class="schema" viewBox="0 0 220 150">
+            <ellipse cx="110" cy="95" rx="90" ry="30" fill="none" stroke="#2f3540" stroke-dasharray="4 4"/>
+            <line x1="110" y1="95" x2="110" y2="20" stroke="#4a8fff" stroke-width="2.5"/>
+            <line x1="110" y1="95" x2="195" y2="100" stroke="#35d07f" stroke-width="2.5"/>
+            <line x1="110" y1="95" x2="40" y2="130" stroke="#ff5a5a" stroke-width="2.5"/>
+            <rect x="88" y="78" width="44" height="24" rx="4" fill="#1a1e24" stroke="#5b616b"/>
+          </svg>
+          <span>IMU не подключен</span>
+        </div>
+      </div>
+
+      <div class="panel c5">
+        <div class="ph"><svg class="i"><use href="#i-game"/></svg>Управление</div>
+        <div class="modes">Режим:
+          <button class="btn on" disabled>Ручной (пульт)</button><button class="btn" disabled>Автономный</button><button class="btn" disabled>По точкам</button>
+        </div>
+        <div class="note">Управление с сайта появится после связи Raspberry Pi с Arduino Mega. Сейчас ровер управляется с пульта. Подробнее — на странице «Управление».</div>
+      </div>
+
+      <div class="panel c7">
+        <div class="ph"><svg class="i"><use href="#i-task"/></svg>Задачи / Статус</div>
+        <div class="tasks">
+          <div class="list">
+            <div><span class="dot" data-dot="ros"></span>Подключение к ROS 2<span class="val" data-k="rosTask">—</span></div>
+            <div><span class="dot" data-dot="esp"></span>«Голова» (ESP32)<span class="val" data-k="espTask">—</span></div>
+            <div><span class="dot" data-dot="sens"></span>Датчики «головы»<span class="val" data-k="sensTask">—</span></div>
+            <div><span class="dot ok"></span>Сайт телеметрии<span class="val st-ok">Работает</span></div>
+            <div><span class="dot"></span>Связь с Arduino Mega<span class="val st-wait">Ожидание</span></div>
+            <div><span class="dot"></span>Автономная езда<span class="val st-wait">Ожидание</span></div>
+          </div>
+          <div class="photo"><img src="rover.jpg" alt="Ровер Одиссея"
+               onerror="this.parentNode.innerHTML='Положите фото ровера<br>в файл ~/odyssey_web/rover.jpg'"></div>
+        </div>
+      </div>
+
+      <div class="panel c6">
+        <div class="ph"><svg class="i"><use href="#i-therm"/></svg>Температура «головы» <span class="right" data-k="chartWin"></span></div>
+        <canvas data-chart="temp"></canvas>
+      </div>
+      <div class="panel c6">
+        <div class="ph"><svg class="i"><use href="#i-air"/></svg>CO₂ <span class="right" data-k="chartWin"></span></div>
+        <canvas data-chart="co2"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ ТЕЛЕМЕТРИЯ -->
+  <section class="page" id="page-telemetry">
+    <div class="grid">
+      <div class="panel c6">
+        <div class="ph"><svg class="i"><use href="#i-task"/></svg>Состояние системы</div>
+        <div style="display:flex;gap:14px;align-items:center">
+          <div class="list" style="flex:1">
+            <div><span class="dot" data-dot="ros"></span>Система (ROS 2)<span class="val" data-k="rosTask">—</span></div>
+            <div><span class="dot" data-dot="wifi"></span>Связь (Wi-Fi)<span class="val"><span data-k="wifi">—</span> dBm</span></div>
+            <div><span class="dot" data-dot="esp"></span>«Голова» (ESP32)<span class="val" data-k="espTask">—</span></div>
+            <div><span class="dot" data-dot="sens"></span>Датчики<span class="val" data-k="sensTask">—</span></div>
+            <div><span class="dot"></span>Приводы<span class="val st-wait">не подключены</span></div>
+          </div>
+          <svg style="width:180px;height:125px;color:#3a404a;flex:none"><use href="#rover"/></svg>
+        </div>
+      </div>
+
+      <div class="panel c6">
+        <div class="ph"><svg class="i"><use href="#i-battery"/></svg>Питание</div>
+        <div class="placeholder" style="min-height:190px">
+          <svg class="i big"><use href="#i-battery"/></svg>
+          <b>Датчик питания не подключен</b>
+          <span>Для заряда, напряжения и тока батареи нужен модуль измерения (например, INA219 или INA226)</span>
+        </div>
+      </div>
+
+      <div class="c12 tiles t7">
+        <div class="tile"><div class="t"><svg class="i"><use href="#i-speed"/></svg>Скорость</div>
+          <div class="v">—<small>м/с</small></div><div class="s">нужны энкодеры</div></div>
+        <div class="tile"><div class="t"><svg class="i"><use href="#i-route"/></svg>Пройденный путь</div>
+          <div class="v">—<small>м</small></div><div class="s">нужны энкодеры</div></div>
+        <div class="tile"><div class="t"><svg class="i"><use href="#i-clock"/></svg>Время работы</div>
+          <div class="v" data-k="uptime">—</div><div class="s">с включения Pi</div></div>
+        <div class="tile"><div class="t"><svg class="i"><use href="#i-therm"/></svg>Температура CPU</div>
+          <div class="v"><span data-k="cputemp">—</span><small>°C</small></div><div class="s">Raspberry Pi 4</div></div>
+        <div class="tile"><div class="t"><svg class="i"><use href="#i-cpu"/></svg>CPU</div>
+          <div class="barrow"><div class="bar"><div data-bar="cpu"></div></div><span data-k="cpu">—</span></div></div>
+        <div class="tile"><div class="t"><svg class="i"><use href="#i-db"/></svg>RAM</div>
+          <div class="barrow"><div class="bar"><div data-bar="ram"></div></div><span data-k="ram">—</span></div></div>
+        <div class="tile"><div class="t"><svg class="i"><use href="#i-disk"/></svg>Хранилище</div>
+          <div class="barrow"><div class="bar"><div data-bar="disk"></div></div><span data-k="disk">—</span></div></div>
+      </div>
+
+      <div class="panel c6">
+        <div class="ph"><svg class="i"><use href="#i-therm"/></svg>Температуры
+          <span class="legend"><span><i style="background:#ff8a1f"></i>«Голова»</span><span><i style="background:#b07cff"></i>CPU</span></span></div>
+        <canvas data-chart="temps"></canvas>
+      </div>
+      <div class="panel c6">
+        <div class="ph"><svg class="i"><use href="#i-cpu"/></svg>Загрузка Raspberry Pi
+          <span class="legend"><span><i style="background:#ff8a1f"></i>CPU, %</span><span><i style="background:#4a8fff"></i>RAM, %</span></span></div>
+        <canvas data-chart="load"></canvas>
+      </div>
+
+      <div class="panel c4">
+        <div class="ph"><svg class="i"><use href="#i-target"/></svg>Ориентация (IMU)</div>
+        <div class="kv">
+          <div>Крен (Roll)<span class="val dim">—</span></div>
+          <div>Тангаж (Pitch)<span class="val dim">—</span></div>
+          <div>Рыскание (Yaw)<span class="val dim">—</span></div>
+        </div>
+        <div class="note">IMU не подключен</div>
+      </div>
+      <div class="panel c4">
+        <div class="ph"><svg class="i"><use href="#i-gps"/></svg>GPS / Позиция <span class="right"><span class="dot"></span>нет фиксации</span></div>
+        <div class="kv">
+          <div>Широта<span class="val dim">—</span></div>
+          <div>Долгота<span class="val dim">—</span></div>
+          <div>Спутники<span class="val dim">—</span></div>
+        </div>
+        <div class="note">NEO-M8N куплен, ещё не подключен</div>
+      </div>
+      <div class="panel c4">
+        <div class="ph"><svg class="i"><use href="#i-radar"/></svg>Датчики расстояния</div>
+        <div class="kv">
+          <div>Передний<span class="val dim">—</span></div>
+          <div>Левый<span class="val dim">—</span></div>
+          <div>Правый<span class="val dim">—</span></div>
+        </div>
+        <div class="note">Дальномеры не установлены</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ СЕНСОРЫ -->
+  <section class="page" id="page-sensors">
+    <div class="grid">
+      <div class="panel c8">
+        <div class="ph"><svg class="i"><use href="#i-air"/></svg>Окружающая среда («голова») <span class="right"><span class="dot" data-dot="esp"></span><span data-k="espText">—</span></span></div>
+        <div class="tiles">
+          <div class="tile"><div class="t"><svg class="i"><use href="#i-therm"/></svg>Температура</div>
+            <div class="v"><span data-k="temp">—</span><small>°C</small></div><div class="s">BME280</div></div>
+          <div class="tile"><div class="t"><svg class="i"><use href="#i-drop"/></svg>Влажность</div>
+            <div class="v"><span data-k="hum">—</span><small>%</small></div><div class="s">BME280</div></div>
+          <div class="tile"><div class="t"><svg class="i"><use href="#i-gps"/></svg>Давление</div>
+            <div class="v"><span data-k="press">—</span><small>гПа</small></div><div class="s"><span data-k="pressmm">—</span> мм рт. ст.</div></div>
+          <div class="tile"><div class="t"><svg class="i"><use href="#i-air"/></svg>CO₂</div>
+            <div class="v"><span data-k="co2" data-color="co2">—</span><small>ppm</small></div><div class="s" data-k="co2q">—</div></div>
+        </div>
+        <div class="bars">
+          <div class="barbox"><svg class="i" style="width:16px;height:16px;vertical-align:-3px;color:var(--accent)"><use href="#i-flame"/></svg> Пламя
+            <div class="v" style="font-size:20px;font-weight:700;margin-top:8px" data-k="flame" data-color="flame">—</div></div>
+          <div class="barbox"><svg class="i" style="width:16px;height:16px;vertical-align:-3px;color:var(--accent)"><use href="#i-drop"/></svg> Вода
+            <div class="barrow"><div class="bar"><div data-bar="water" style="background:var(--cyan)"></div></div><span><span data-k="water">—</span> %</span></div>
+            <div class="small muted" style="margin-top:6px">сырое значение: <span data-k="waterraw">—</span></div></div>
+          <div class="barbox">Статус «головы»
+            <div class="v" style="font-size:20px;font-weight:700;margin-top:8px" data-k="sensTask">—</div></div>
+        </div>
+      </div>
+
+      <div class="panel c4">
+        <div class="ph"><svg class="i"><use href="#i-gear"/></svg>Статус сенсоров</div>
+        <div class="list">
+          <div><span class="dot" data-dot="temp"></span>BME280 (темп., влажн., давл.)<span class="val" data-k="okTemp">—</span></div>
+          <div><span class="dot" data-dot="co2"></span>CO₂ (NDIR)<span class="val" data-k="okCo2">—</span></div>
+          <div><span class="dot" data-dot="flame"></span>Датчик пламени<span class="val" data-k="okFlame">—</span></div>
+          <div><span class="dot" data-dot="water"></span>Датчик воды<span class="val" data-k="okWater">—</span></div>
+          <div><span class="dot"></span>GPS (NEO-M8N)<span class="val dim">не подключен</span></div>
+          <div><span class="dot"></span>IMU<span class="val dim">не подключен</span></div>
+          <div><span class="dot"></span>Энкодеры колёс (Холл)<span class="val dim">не подключены</span></div>
+          <div><span class="dot"></span>Дальномеры<span class="val dim">не установлены</span></div>
+          <div><span class="dot"></span>Камера<span class="val dim">не подключена</span></div>
+        </div>
+      </div>
+
+      <div class="panel c6">
+        <div class="ph"><svg class="i"><use href="#i-radar"/></svg>LiDAR / дальномеры <span class="right">360°</span></div>
+        <div class="placeholder">
+          <svg class="schema" viewBox="0 0 200 170">
+            <g fill="none" stroke="#2f3540"><circle cx="100" cy="85" r="75"/><circle cx="100" cy="85" r="50"/><circle cx="100" cy="85" r="25"/>
+            <path d="M100 5v160M20 85h160"/></g>
+            <path d="M92 92l8-18 8 18z" fill="#ff8a1f"/>
+          </svg>
+          <b>Нет данных о расстояниях</b>
+          <span>появятся после установки LiDAR или ультразвуковых дальномеров</span>
+        </div>
+      </div>
+
+      <div class="panel c6">
+        <div class="ph"><svg class="i"><use href="#i-target"/></svg>IMU (ориентация и движение)</div>
+        <div class="placeholder">
+          <svg class="schema" viewBox="0 0 220 150">
+            <ellipse cx="110" cy="95" rx="90" ry="30" fill="none" stroke="#2f3540" stroke-dasharray="4 4"/>
+            <line x1="110" y1="95" x2="110" y2="20" stroke="#4a8fff" stroke-width="2.5"/>
+            <line x1="110" y1="95" x2="195" y2="100" stroke="#35d07f" stroke-width="2.5"/>
+            <line x1="110" y1="95" x2="40" y2="130" stroke="#ff5a5a" stroke-width="2.5"/>
+            <rect x="88" y="78" width="44" height="24" rx="4" fill="#1a1e24" stroke="#5b616b"/>
+          </svg>
+          <b>IMU не подключен</b>
+          <span>крен, тангаж, рыскание и ускорения появятся после подключения</span>
+        </div>
+      </div>
+
+      <div class="panel c6">
+        <div class="ph"><svg class="i"><use href="#i-gps"/></svg>GPS (позиция) <span class="right"><span class="dot"></span>нет фиксации</span></div>
+        <div class="kv">
+          <div>Широта<span class="val dim">—</span></div>
+          <div>Долгота<span class="val dim">—</span></div>
+          <div>Высота<span class="val dim">—</span></div>
+          <div>Спутники<span class="val dim">—</span></div>
+          <div>HDOP<span class="val dim">—</span></div>
+        </div>
+        <div class="note">Модуль GY-GPSV3-NEO-M8N есть, будет подключён к Raspberry Pi.</div>
+      </div>
+
+      <div class="panel c6">
+        <div class="ph"><svg class="i"><use href="#i-cam"/></svg>Камера (передняя)</div>
+        <div class="placeholder">
+          <span class="tag">нет сигнала</span>
+          <svg class="i big"><use href="#i-cam"/></svg>
+          <b>Камера не подключена</b>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ КАРТА -->
+  <section class="page" id="page-map">
+    <div class="grid">
+      <div class="panel c9">
+        <div class="ph"><svg class="i"><use href="#i-map"/></svg>Карта
+          <span class="right"><button class="btn on" disabled>2D</button><button class="btn" disabled>3D</button><button class="btn" disabled>Траектория</button></span></div>
+        <div class="placeholder gridbg tall">
+          <div class="arrow"></div>
+          <b>SLAM не запущен</b>
+          <span>Для построения карты нужны: энкодеры колёс (одометрия), IMU и LiDAR или дальномеры.<br>
+            Без LiDAR можно рисовать траекторию по GPS — это ближайший шаг.</span>
+        </div>
+      </div>
+      <div class="c3" style="display:grid;gap:14px;align-content:start">
+        <div class="panel">
+          <div class="ph"><svg class="i"><use href="#i-db"/></svg>Информация о карте</div>
+          <div class="kv">
+            <div>Площадь<span class="val dim">—</span></div>
+            <div>Разрешение<span class="val dim">—</span></div>
+            <div>Время построения<span class="val dim">—</span></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="ph"><svg class="i"><use href="#i-gps"/></svg>Локализация</div>
+          <div class="kv">
+            <div>Позиция (X, Y)<span class="val dim">—</span></div>
+            <div>Ориентация<span class="val dim">—</span></div>
+            <div>Точность<span class="val dim">—</span></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="ph"><svg class="i"><use href="#i-list"/></svg>Слои карты</div>
+          <label class="switch">Карта препятствий<input type="checkbox" checked disabled></label>
+          <label class="switch">Траектория<input type="checkbox" checked disabled></label>
+          <label class="switch">Позиция ровера<input type="checkbox" checked disabled></label>
+          <label class="switch">Сетка<input type="checkbox" disabled></label>
+        </div>
+      </div>
+      <div class="panel c12">
+        <div class="ph"><svg class="i"><use href="#i-map"/></svg>Действия с картой</div>
+        <div class="modes">
+          <button class="btn on" disabled><svg class="i"><use href="#i-down"/></svg>Сохранить карту</button>
+          <button class="btn" disabled>Загрузить карту</button>
+          <button class="btn" disabled>Сбросить карту</button>
+          <button class="btn" disabled>Экспорт (PGM/YAML)</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ КАМЕРЫ -->
+  <section class="page" id="page-cameras">
+    <div class="grid">
+      <div class="panel c6">
+        <div class="ph"><svg class="i"><use href="#i-cam"/></svg>Камера (передняя)</div>
+        <div class="placeholder tall">
+          <span class="tag">нет сигнала</span>
+          <svg class="i big"><use href="#i-cam"/></svg>
+          <b>Камера не подключена</b>
+          <span>Applied Robotics TrackingCam V3 или USB-камера</span>
+          <div class="cam-btns"><span><svg class="i"><use href="#i-shot"/></svg></span><span><svg class="i"><use href="#i-cam"/></svg></span><span><svg class="i"><use href="#i-full"/></svg></span></div>
+        </div>
+      </div>
+      <div class="panel c6">
+        <div class="ph"><svg class="i"><use href="#i-cam"/></svg>Камера (задняя / манипулятор)</div>
+        <div class="placeholder tall">
+          <span class="tag">нет сигнала</span>
+          <svg class="i big"><use href="#i-cam"/></svg>
+          <b>Не установлена</b>
+          <span>место под вторую камеру</span>
+        </div>
+      </div>
+      <div class="panel c12">
+        <div class="ph"><svg class="i"><use href="#i-gear"/></svg>Параметры видео</div>
+        <div class="kv">
+          <div>Разрешение<span class="val dim">—</span></div>
+          <div>Кадров в секунду<span class="val dim">—</span></div>
+          <div>Запись видео<span class="val dim">недоступна</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ ЗАДАЧИ -->
+  <section class="page" id="page-tasks">
+    <div class="grid">
+      <div class="panel c6">
+        <div class="ph"><svg class="i"><use href="#i-flag"/></svg>Дорожная карта проекта</div>
+        <div class="road">
+          <div><span class="dot ok"></span><div>Шасси, моторы и управление с пульта<small>Arduino Mega, драйверы моторов</small></div></div>
+          <div><span class="dot ok"></span><div>«Голова» с датчиками<small>ESP32: BME280, CO₂, пламя, вода, часы, экраны</small></div></div>
+          <div><span class="dot ok"></span><div>Raspberry Pi 4 + ROS 2 Jazzy<small>Ubuntu 24.04, автозапуск узлов</small></div></div>
+          <div><span class="dot ok"></span><div>Сайт телеметрии<small>rosbridge, наземная станция</small></div></div>
+          <div><span class="dot warn"></span><div>Связь Raspberry Pi ↔ Arduino Mega<small>управление ровером из ROS 2 и с сайта</small></div></div>
+          <div><span class="dot"></span><div>GPS, энкодеры колёс, IMU<small>скорость, путь, позиция, ориентация</small></div></div>
+          <div><span class="dot"></span><div>Камера<small>видео на сайте</small></div></div>
+          <div><span class="dot"></span><div>Солнечная панель с автораскрытием<small>сервоприводы, MPPT-зарядка</small></div></div>
+          <div><span class="dot"></span><div>Автономная езда по точкам<small>навигация, объезд препятствий</small></div></div>
+        </div>
+      </div>
+      <div class="panel c6">
+        <div class="ph"><svg class="i"><use href="#i-list"/></svg>Библиотека задач <span class="right">доступно после автономности</span></div>
+        <div class="lib">
+          <div><svg class="i"><use href="#i-route"/></svg><div><b>Патрулирование</b><small>Объезд заданного маршрута</small></div></div>
+          <div><svg class="i"><use href="#i-flag"/></svg><div><b>Движение в точку</b><small>Переезд к указанным координатам</small></div></div>
+          <div><svg class="i"><use href="#i-map"/></svg><div><b>Сканирование области</b><small>Построение карты в зоне</small></div></div>
+          <div><svg class="i"><use href="#i-shot"/></svg><div><b>Фото-маршрут</b><small>Съёмка в контрольных точках</small></div></div>
+          <div><svg class="i"><use href="#i-db"/></svg><div><b>Сбор данных</b><small>Запись телеметрии и сенсоров</small></div></div>
+        </div>
+      </div>
+      <div class="panel c12">
+        <div class="ph"><svg class="i"><use href="#i-task"/></svg>Текущая задача</div>
+        <div class="placeholder" style="min-height:120px">
+          <b>Нет активной задачи</b>
+          <span>Ровер управляется вручную с пульта</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ УПРАВЛЕНИЕ -->
+  <section class="page" id="page-control">
+    <div class="grid">
+      <div class="panel c8">
+        <div class="ph"><svg class="i"><use href="#i-game"/></svg>Ручное управление</div>
+        <div class="modes">Режим:
+          <button class="btn on" disabled>Ручной (пульт)</button><button class="btn" disabled>С сайта</button><button class="btn" disabled>Автономный</button>
+        </div>
+        <div class="ctrl" style="opacity:.6">
+          <div class="pad">
+            <button class="up" disabled>↑</button><button class="left" disabled>←</button>
+            <button class="down" disabled>↓</button><button class="right" disabled>→</button>
+          </div>
+          <div class="speed">Скорость: —
+            <input type="range" min="0" max="100" value="40" disabled>
+          </div>
+        </div>
+        <div class="note">Сейчас ровер управляется с радиопульта через Arduino Mega. Чтобы управлять с сайта, нужно связать
+          Raspberry Pi с Arduino Mega (USB или UART), не ломая управление с пульта. Это следующий этап проекта.</div>
+      </div>
+      <div class="panel c4">
+        <div class="ph"><svg class="i"><use href="#i-warn"/></svg>Безопасность</div>
+        <button class="btn stop" style="width:100%;justify-content:center;padding:18px;font-size:18px" disabled>АВАРИЙНЫЙ СТОП</button>
+        <div class="note">Кнопка заработает вместе с управлением с сайта. Безопасная остановка будет на каждом этапе.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ ЛОГИ -->
+  <section class="page" id="page-logs">
+    <div class="grid">
+      <div class="c12 tiles" style="grid-template-columns:repeat(5,1fr)">
+        <div class="tile"><div class="t"><svg class="i"><use href="#i-nodes"/></svg>Узлы ROS 2</div><div class="v" data-k="nodeCount">—</div><div class="s">активны</div></div>
+        <div class="tile"><div class="t"><svg class="i"><use href="#i-msg"/></svg>Сообщения</div><div class="v" data-k="logTotal">0</div><div class="s">с открытия страницы</div></div>
+        <div class="tile"><div class="t"><svg class="i"><use href="#i-warn"/></svg>Предупреждения</div><div class="v" data-k="logWarn">0</div><div class="s">WARN</div></div>
+        <div class="tile"><div class="t"><svg class="i"><use href="#i-x"/></svg>Ошибки</div><div class="v" data-k="logErr">0</div><div class="s">ERROR / FATAL</div></div>
+        <div class="tile"><div class="t"><svg class="i"><use href="#i-clock"/></svg>Время работы</div><div class="v" data-k="uptime">—</div><div class="s">Raspberry Pi</div></div>
+      </div>
+
+      <div class="panel c9">
+        <div class="ph"><svg class="i"><use href="#i-list"/></svg>Логи в реальном времени <span class="right">/rosout</span></div>
+        <div class="toolbar">
+          Уровень:
+          <label><input type="checkbox" class="lvf" value="DEBUG" checked>DEBUG</label>
+          <label><input type="checkbox" class="lvf" value="INFO" checked>INFO</label>
+          <label><input type="checkbox" class="lvf" value="WARN" checked>WARN</label>
+          <label><input type="checkbox" class="lvf" value="ERROR" checked>ERROR</label>
+          <select class="input" id="log-node"><option value="">Все узлы</option></select>
+          <input class="input grow" id="log-search" placeholder="Поиск по логам…">
+          <label><input type="checkbox" id="log-auto" checked>Автопрокрутка</label>
+          <button class="btn" id="log-pause"><svg class="i"><use href="#i-pause"/></svg>Пауза</button>
+          <button class="btn" id="log-clear"><svg class="i"><use href="#i-trash"/></svg></button>
+          <button class="btn" id="log-save"><svg class="i"><use href="#i-down"/></svg></button>
+        </div>
+        <div class="logbox" id="logbox"><div class="empty">Ожидание сообщений…</div></div>
+      </div>
+
+      <div class="c3" style="display:grid;gap:14px;align-content:start">
+        <div class="panel">
+          <div class="ph"><svg class="i"><use href="#i-pulse"/></svg>Статистика</div>
+          <div class="donut-wrap">
+            <div class="donut" id="donut"><b data-k="logTotal">0</b></div>
+            <div class="list small" style="flex:1">
+              <div><span class="dot" style="background:var(--ok)"></span>INFO<span class="val" data-k="logInfo">0</span></div>
+              <div><span class="dot" style="background:var(--blue)"></span>DEBUG<span class="val" data-k="logDebug">0</span></div>
+              <div><span class="dot" style="background:var(--warn)"></span>WARN<span class="val" data-k="logWarn">0</span></div>
+              <div><span class="dot" style="background:var(--bad)"></span>ERROR<span class="val" data-k="logErr">0</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="ph"><svg class="i"><use href="#i-nodes"/></svg>Активные узлы</div>
+          <div class="list small" id="nodelist"><div class="empty">—</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ НАСТРОЙКИ -->
+  <section class="page" id="page-settings">
+    <div class="grid">
+      <div class="panel c6">
+        <div class="ph"><svg class="i"><use href="#i-gear"/></svg>Настройки отображения</div>
+        <div class="form">
+          <div><span>Датчик воды: значение «100 %»<small>сырое значение при полном погружении</small></span>
+            <input class="input" type="number" id="set-water" min="100" max="4095"></div>
+          <div><span>Окно графиков, минут<small>сколько истории хранить на графиках</small></span>
+            <select class="input" id="set-chart"><option>5</option><option>10</option><option>30</option><option>60</option></select></div>
+          <div><span>Порог CO₂ «душно», ppm<small>выше — жёлтый цвет</small></span>
+            <input class="input" type="number" id="set-co2warn" min="400" max="5000"></div>
+          <div><span>Порог CO₂ «опасно», ppm<small>выше — красный цвет</small></span>
+            <input class="input" type="number" id="set-co2bad" min="400" max="5000"></div>
+        </div>
+        <div class="modes" style="margin-top:14px">
+          <button class="btn on" id="set-save">Сохранить</button>
+          <button class="btn" id="set-reset">По умолчанию</button>
+          <span class="small muted" id="set-msg"></span>
+        </div>
+        <div class="note">Настройки сохраняются в этом браузере.</div>
+      </div>
+      <div class="panel c6">
+        <div class="ph"><svg class="i"><use href="#i-cpu"/></svg>О системе</div>
+        <div class="kv">
+          <div>Бортовой компьютер<span class="val">Raspberry Pi 4</span></div>
+          <div>Система<span class="val">Ubuntu Server 24.04</span></div>
+          <div>ROS 2<span class="val">Jazzy</span></div>
+          <div>Адрес rosbridge<span class="val" data-k="rosUrl">—</span></div>
+          <div>«Голова»<span class="val">ESP32 · /dev/ttyUSB0</span></div>
+          <div>Температура CPU<span class="val"><span data-k="cputemp">—</span> °C</span></div>
+          <div>Время работы<span class="val" data-k="uptime">—</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
+</div>
+
+<script src="roslib.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
