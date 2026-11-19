@@ -177,7 +177,7 @@ function tick() {
 
 // ---------------- подключение к ROS 2 ----------------
 const ROS_URL = 'ws://' + (location.hostname || 'localhost') + ':9090';
-const ros = new ROSLIB.Ros({ url: ROS_URL });
+const ros = location.protocol === 'https:' ? new ROSLIB.Ros() : new ROSLIB.Ros({ url: ROS_URL });
 ros.on('connection', () => { rosOk = true; refreshNodes(); render(); });
 ros.on('error', () => { rosOk = false; render(); });
 ros.on('close', () => {
